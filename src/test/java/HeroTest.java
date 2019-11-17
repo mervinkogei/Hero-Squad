@@ -15,7 +15,7 @@ public class HeroTest {
     public void savesName()
     {
         Hero hero = new Hero("Kogei",24,"Strength","Giving up easily");
-        assertEquals("Hulk",hero.getName());
+        assertEquals("Kogei",hero.getName());
     }
 
     @Test
