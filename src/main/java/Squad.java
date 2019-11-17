@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Squad {
     private int max_size;
     private String name;
@@ -13,5 +16,6 @@ public class Squad {
         instances.add(this);
         id = instances.size();
         heroes = new ArrayList<Hero>();
+
     }
 }
