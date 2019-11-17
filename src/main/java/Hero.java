@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hero {
     private String name;
     private int age;
@@ -13,5 +16,53 @@ public class Hero {
         this.weakness = weakness;
         instances.add(this);
         Id = instances.size();
+    }
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getSpecial_power() {
+        return specialPower;
+    }
+
+    public String getWeakness() {
+        return weakness;
+    }
+    public static List<Hero> all() {
+        return instances;
+    }
+    public static void clear() {
+        instances.clear();
+    }
+
+    public int getId()
+    {
+        return Id;
+    }
+
+    public static Hero find(int id) {
+        try {
+            return instances.get(id - 1);
+        } catch (IndexOutOfBoundsException exception) {
+            return null;
+        }
+    }
+
+    public static boolean findHeroByName(String name)
+    {
+        boolean isAvailable = false;
+        for (int i =0; i<instances.size(); i++)
+        {
+            if (name.equalsIgnoreCase(instances.get(i).name) )
+            {
+                isAvailable = true;
+            }
+        }
+
+        return isAvailable;
     }
 }
