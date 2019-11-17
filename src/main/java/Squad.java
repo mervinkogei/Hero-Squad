@@ -18,4 +18,37 @@ public class Squad {
         heroes = new ArrayList<Hero>();
 
     }
+    public int getMax_size() {
+        return max_size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+    public static List<Squad> all() {
+        return instances;
+    }
+    public static void clear() {
+        instances.clear();
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public static Squad find(int id) {
+        return instances.get(id - 1);
+    }
+    public List<Hero> getHeroes()
+    {
+        return heroes;
+    }
+    public void addHero(Hero hero) {
+        heroes.add(hero);
+    }
 }
