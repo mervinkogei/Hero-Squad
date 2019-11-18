@@ -4,14 +4,25 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import static spark.Spark.*;
-import static spark.Spark.get;
-import static spark.Spark.post;
+//import static spark.Spark.get;
+//import static spark.Spark.post;
 
 public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
-//        String layout = "templates/layout.hbs";
+        String layout = "templates/layout.hbs";
 
+        ProcessBuilder process = new ProcessBuilder();
+        Integer port;
+
+
+        if (process.environment().get("PORT") != null) {
+            port = Integer.parseInt(process.environment().get("PORT"));
+        } else {
+            port = 4567;
+        }
+
+        port(port);
 
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();

@@ -1,0 +1,99 @@
+*
+{
+    border: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#content
+{
+    display: flex;
+}
+
+#left
+{
+    height: 100vh;
+    width: 40%;
+    background: url("/images/4s.jpg") no-repeat center center/cover;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.web-title
+{
+    font-size: 4rem;
+}
+
+#right
+{
+    height: 100vh;
+    width: 60%;
+    background: url("/images/right2.jpg") no-repeat center center/cover;
+}
+.squads
+{
+    color: white;
+    text-align: center;
+}
+.categories-form
+{
+    width: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.my-form
+{
+    width: 40%;
+    height: 60%;
+    padding: 1rem;
+
+}
+.form-inputs
+{
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 1rem;
+
+}
+.my-form-1
+{
+    width: 100%;
+    height: 100%;
+}
+
+.success
+{
+    height: 100%;
+    width: 100%;
+}
+
+.squad-card
+{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-500
+    {
+        width: 100%;
+        height: 100%;
+        color: white;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+    }
+
+.page-500 a{
+    margin: 0 auto;
+}
