@@ -6,7 +6,7 @@ plugins {
 group 'Hero'
 version '1.0-SNAPSHOT'
 
-//mainClassName = 'App'
+mainClassName = 'App'
 
 sourceCompatibility = 1.8
 

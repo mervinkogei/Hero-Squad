@@ -22,7 +22,7 @@ public class HeroTest {
     public void savesAge()
     {
         Hero hero = new Hero("Kogei",24,"Strength","Giving up easily");
-        assertEquals(30,hero.getAge());
+        assertEquals(24,hero.getAge());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class HeroTest {
     public void savesWeakness()
     {
         Hero hero = new Hero("Kogei",24,"Strength","Giving up easily");
-        assertEquals("Anger issues",hero.getWeakness());
+        assertEquals("Giving up easily",hero.getWeakness());
     }
 
     @Test
