@@ -1,5 +1,5 @@
 import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import spark.template.velocity.VelocityTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,15 +9,15 @@ import static spark.Spark.*;
 public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
-        String layout = "layout.hbs";
+        String layout = "templates/layout.vtl";
 
 //        BasicConfigurator.configure();
 
-            ProcessBuilder process = new ProcessBuilder();
-            Integer port;
-            if (process.environment().get("PORT") != null) {
-                port = Integer.parseInt(process.environment().get("PORT"));
-            } else {
+        ProcessBuilder process = new ProcessBuilder();
+        Integer port;
+        if (process.environment().get("PORT") != null) {
+            port = Integer.parseInt(process.environment().get("PORT"));
+        } else {
             port = 4567;
         }
 
@@ -28,8 +28,8 @@ public class App {
             System.out.println(Squad.all());
             Map<String, Object> model = new HashMap<>();
             model.put("squads", Squad.all());
-            model.put("template", "categories.hbs");
-            return new HandlebarsTemplateEngine().render(
+            model.put("template", "templates/categories.vtl");
+            return new VelocityTemplateEngine().render(
                     new ModelAndView(model, layout)
             );
         });
@@ -37,8 +37,11 @@ public class App {
         get("/squads", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("squads", Squad.all());
-            return new ModelAndView(model, "categories.hbs");
-        },new HandlebarsTemplateEngine());
+            model.put("template", "templates/categories.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         post("/squads", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -46,30 +49,39 @@ public class App {
             String size = req.queryParams("size");
             String cause = req.queryParams("cause");
             Squad squad = new Squad(Integer.parseInt(size),name,cause);
-            return new ModelAndView(model, "squad-success.hbs");
-        },new HandlebarsTemplateEngine());
+            model.put("template", "templates/squad-success.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         get("squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "categories_form.hbs");
-            return new ModelAndView(model, "categories_form.hbs");
-        }, new HandlebarsTemplateEngine());
+            model.put("template", "templates/categories_form.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         get("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Squad squad = Squad.find(Integer.parseInt(req.params(":id")));
             model.put("squad", squad);
-            model.put("template", "squad.hbs");
-            return new ModelAndView(model, "squad.hbs");
-        },new HandlebarsTemplateEngine());
+            model.put("template", "templates/squad.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         get("/squads/:id/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Squad squad = Squad.find(Integer.parseInt(req.params(":id")));
             model.put("squad", squad);
-            model.put("template", "squad-heroes-form.hbs");
-            return new ModelAndView(model, "squad-heroes-form.hbs");
-        }, new HandlebarsTemplateEngine());
+            model.put("template", "templates/squad-heroes-form.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         post("/heroes", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -83,7 +95,7 @@ public class App {
             if (Hero.findHeroByName(name.trim()))
             {
 
-                model.put("template", "heroes-fail.hbs");
+                model.put("template", "templates/heroes-fail.vtl");
                 model.put("squad",squad);
             }
             else
@@ -91,25 +103,28 @@ public class App {
                 Hero hero = new Hero(name,Integer.parseInt(age),special_power,weakness);
                 squad.addHero(hero);
                 model.put("squad",squad);
+                model.put("template", "templates/heroes-success.vtl");
             }
-            return new ModelAndView(model, "heroes-success.hbs");
-        },new HandlebarsTemplateEngine());
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         // 500
         internalServerError((req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "500.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model,"500.hbs")
+            model.put("template", "templates/500.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
             );
         });
 
         // 400
         notFound((req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "400.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "400.hbs")
+            model.put("template", "templates/400.vtl");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
             );
         });
     }
