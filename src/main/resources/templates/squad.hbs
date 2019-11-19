@@ -1,23 +1,26 @@
+{{#partial "content"}}
 <div class="squad-card">
     <div class="card text-center" style="width: 38rem;">
         <div class="card-body">
-            <h2 class="card-title">$squad.getName()</h2>
-            <h6 class="card-text">$squad.getCause()</h6>
+            <h2 class="card-title">{{name}}</h2>
+            <h6 class="card-text">{{cause}}</h6>
         </div>
 
         <ul class="list-group list-group-flush">
-            #foreach($hero in $squad.getHeroes())
-            <li class="list-group-item">$hero.getName()</li>
-            #end
+            {{#foreach}}({{hero}} in {{heroes}})
+            <li class="list-group-item">{{name}}</li>
+{{/foreach}}
         </ul>
 
         <div class="card-body">
-            <a href="/squads/$squad.getId()/heroes/new" class="card-link">Add New Hero</a>
+            <a href="/squads/{{id}}/heroes/new" class="card-link">Add New Hero</a>
             <a href="/squads" class="card-link">All Squads</a>
         </div>
         <div d-flex justify-content-between align-items-center>
-            <span class="badge badge-primary badge-pill">Max: $squad.getMax_size()</span>
-            <span class="badge badge-success badge-pill">Size: $squad.getHeroes().size() </span>
+            <span class="badge badge-primary badge-pill">Max: {{max_size}}</span>
+            <span class="badge badge-success badge-pill">Size: {{size}} </span>
         </div>
     </div>
 </div>
+{{/partial}}
+<!--{{>layout.hbs}}-->

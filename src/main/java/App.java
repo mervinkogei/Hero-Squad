@@ -1,43 +1,44 @@
-import java.util.HashMap;
-import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static spark.Spark.*;
-//import static spark.Spark.get;
-//import static spark.Spark.post;
 
 public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
-        String layout = "templates/layout.hbs";
+        String layout = "layout.hbs";
 
-        ProcessBuilder process = new ProcessBuilder();
-        Integer port;
+//        BasicConfigurator.configure();
 
-
-        if (process.environment().get("PORT") != null) {
-            port = Integer.parseInt(process.environment().get("PORT"));
-        } else {
+            ProcessBuilder process = new ProcessBuilder();
+            Integer port;
+            if (process.environment().get("PORT") != null) {
+                port = Integer.parseInt(process.environment().get("PORT"));
+            } else {
             port = 4567;
         }
 
         port(port);
 
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
+
+        get("/", (req, res) -> {
+            System.out.println(Squad.all());
+            Map<String, Object> model = new HashMap<>();
             model.put("squads", Squad.all());
-            return new ModelAndView(model, "categories.hbs");
-        }, new HandlebarsTemplateEngine());
+            model.put("template", "categories.hbs");
+            return new HandlebarsTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
 
         get("/squads", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("squads", Squad.all());
-//            model.put("template", "templates/categories.vtl");
             return new ModelAndView(model, "categories.hbs");
-//                    new ModelAndView(model, layout)
-        }, new HandlebarsTemplateEngine());
-
+        },new HandlebarsTemplateEngine());
 
         post("/squads", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -45,39 +46,30 @@ public class App {
             String size = req.queryParams("size");
             String cause = req.queryParams("cause");
             Squad squad = new Squad(Integer.parseInt(size),name,cause);
-            model.put("template", "templates/squad-success.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "squad-success.hbs")
-            );
-        });
+            return new ModelAndView(model, "squad-success.hbs");
+        },new HandlebarsTemplateEngine());
 
         get("squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "templates/categories_form.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "categories-form.hbs")
-            );
-        });
+            model.put("template", "categories_form.hbs");
+            return new ModelAndView(model, "categories_form.hbs");
+        }, new HandlebarsTemplateEngine());
 
         get("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Squad squad = Squad.find(Integer.parseInt(req.params(":id")));
             model.put("squad", squad);
-//            model.put("template", "templates/squad.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "squad.hbs")
-            );
-        });
+            model.put("template", "squad.hbs");
+            return new ModelAndView(model, "squad.hbs");
+        },new HandlebarsTemplateEngine());
 
         get("/squads/:id/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Squad squad = Squad.find(Integer.parseInt(req.params(":id")));
             model.put("squad", squad);
-            model.put("template", "templates/squad-heroes-form.hbs");
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "squad-heroes-form.hbs")
-            );
-        });
+            model.put("template", "squad-heroes-form.hbs");
+            return new ModelAndView(model, "squad-heroes-form.hbs");
+        }, new HandlebarsTemplateEngine());
 
         post("/heroes", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -91,7 +83,7 @@ public class App {
             if (Hero.findHeroByName(name.trim()))
             {
 
-                model.put("template", "templates/heroes-fail.hbs");
+                model.put("template", "heroes-fail.hbs");
                 model.put("squad",squad);
             }
             else
@@ -99,28 +91,23 @@ public class App {
                 Hero hero = new Hero(name,Integer.parseInt(age),special_power,weakness);
                 squad.addHero(hero);
                 model.put("squad",squad);
-                model.put("template", "templates/heroes-success.hbs");
             }
-            return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "heroes-success.hbs")
-            );
-        });
+            return new ModelAndView(model, "heroes-success.hbs");
+        },new HandlebarsTemplateEngine());
 
         // 500
         internalServerError((req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            //res.type("application/json");
-            model.put("template", "templates/500.hbs");
+            model.put("template", "500.hbs");
             return new HandlebarsTemplateEngine().render(
-                    new ModelAndView(model, "500.hbs")
+                    new ModelAndView(model,"500.hbs")
             );
         });
 
         // 400
         notFound((req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            //res.type("application/json");
-            model.put("template", "templates/400.hbs");
+            model.put("template", "400.hbs");
             return new HandlebarsTemplateEngine().render(
                     new ModelAndView(model, "400.hbs")
             );

@@ -1,11 +1,12 @@
+{{#partial "content"}}
 <div class="d-flex justify-content-center align-items-center my-form-1">
     <div class="card text-center my-form">
 
-        #if($squad.getHeroes().size() < $squad.getMax_size())
-        <h3>Add a Hero to $squad.getName()</h3>
+        {{#if}}({{heroes.size}} < {{max_size}})
+        <h3>Add a Hero to {{name}}</h3>
         <form class="form-inputs" action="/heroes" method="post">
             <div class="form-group">
-                <input type="hidden" class="form-control form-control-sm" id="squadId" name="squadId" value="$squad.getId()">
+                <input type="hidden" class="form-control form-control-sm" id="squadId" name="squadId" value="{{id}}">
             </div>
 
             <div class="form-group">
@@ -27,14 +28,14 @@
             <button type="submit" class="btn btn-success">Submit</button>
         </form>
 
-        #else
+        {{else}}
 
         <h1>Your Squad Is Full</h1>
 
         <form class="form-inputs" action="/heroes" method="post">
             <fieldset disabled="disabled">
                 <div class="form-group">
-                    <input type="hidden" class="form-control form-control-sm" id="squadId" name="squadId" value="$squad.getId()">
+                    <input type="hidden" class="form-control form-control-sm" id="squadId" name="squadId" value="{{id}}">
                 </div>
 
                 <div class="form-group">
@@ -57,6 +58,8 @@
             </fieldset>
         </form>
 
-        #end
+{{/if}}
     </div>
 </div>
+{{/partial}}
+{{>layout.hbs}}
