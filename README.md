@@ -29,8 +29,8 @@
 ## Features
 This application is able to: 
 * Get user input
-* Encrypt the text to cipher
-* Decrypt the cipher to original string
+* Add Squad and View the Squad
+* Add the team and also view the team
 
 ## Known Bugs
 * Routing - Squad

@@ -12,6 +12,8 @@ applicationName = "Hero-Squad"
 
 sourceCompatibility = 1.8
 
+task stage(dependsOn: ['clean', 'installDist'])
+
 repositories {
     mavenCentral()
 }
