@@ -17,7 +17,7 @@ color:white;
 {
     height: 100vh;
     width: 40%;
-    background: url("/images/Background_3.jpg") no-repeat center center/cover;
+    background: url("/images/Background_2.jpg") no-repeat center center/cover;
 
     display: flex;
     flex-direction: column;

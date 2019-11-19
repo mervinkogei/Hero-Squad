@@ -11,8 +11,6 @@ public class App {
         staticFileLocation("/public");
         String layout = "templates/layout.vtl";
 
-//        BasicConfigurator.configure();
-
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
         if (process.environment().get("PORT") != null) {
@@ -22,7 +20,6 @@ public class App {
         }
 
         port(port);
-
 
         get("/", (req, res) -> {
             System.out.println(Squad.all());
@@ -43,7 +40,7 @@ public class App {
             );
         });
 
-        post("/squads", (req, res) -> {
+        post("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             String size = req.queryParams("size");
