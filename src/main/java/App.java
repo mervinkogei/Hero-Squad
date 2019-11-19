@@ -40,7 +40,7 @@ public class App {
             );
         });
 
-        post("/squads/new", (req, res) -> {
+        post("/squads", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             String size = req.queryParams("size");
@@ -54,7 +54,7 @@ public class App {
 
         get("squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "templates/categories_form.vtl");
+            model.put("template", "templates/categories-form.vtl");
             return new VelocityTemplateEngine().render(
                     new ModelAndView(model, layout)
             );
@@ -85,8 +85,8 @@ public class App {
             Squad squad = Squad.find(Integer.parseInt(req.queryParams("squadId")));
             String name = req.queryParams("name");
             String age = req.queryParams("age");
-            String special_power = req.queryParams("special_power");
-            String weakness = req.queryParams("special_power");
+            String special_power = req.queryParams("specialPower");
+            String weakness = req.queryParams("specialPower");
 
 
             if (Hero.findHeroByName(name.trim()))
